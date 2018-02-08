@@ -64,6 +64,13 @@ Functions setRequestFromContext() and setContextFromRequest() were removed from 
 
 Some column names match C/C++ keywords, so tools/codegen/gentabledefs.py will append an underscore to those struct members.  For example, usb_devices table has a column named "class".  The struct field would be named "class_".  e.g.  `row.class_ = "HID";`
 
+
+### Comparison of Existing vs Proposed
+
+ - [Table Plugin Declaration](./compare_table_plugin.md)
+ - [Table Implementation using struct](./compare_table_impl.md)
+ - [Additional Amalgamation](./compare_amalgamation.md)
+
 ### Future Optimization Advantages
 1. Table .spec files no longer need to include **implementation** declarations.  Linkage symbol is tbl_TABLENAME_plugin_new().
 2. Now that the generated header files are available to implementation code, it would be possible to optimize generate/generator return value (call it QueryResultsV2) to not include column names for each row.  QueryResultsV2 could be `std::vector<std::map<uint32_t,std::string>>`, where the uint32_t is the index of the TableDefinition.columns[].  Alternatively, QueryResultsV2 could be `std::vector<std::vector<std::string>>` if no column values are skipped. If code uses the generated table struct (e.g. tbl_etc_hosts_data_t), the toHashmap() conversion function would take of the details.
