@@ -54,6 +54,7 @@ The TablePluginBase subclass and factory function. Notice that the table definit
 
 ![table plugin subclass](./images/ssTablePluginEtcHosts.png)
 
+A few example generated header and amalgamation files are provided here [./build/darwin/generated](./build/darwin/generated).
 
 ### Behind the Scenes
 
