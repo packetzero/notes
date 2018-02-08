@@ -62,6 +62,8 @@ Since the utils and additional amalgamations now call tbl_TABLENAME_plugin_new()
 
 Functions setRequestFromContext() and setContextFromRequest() were removed from tables.h and are local to sql/sql.cpp and core/tables.cpp.
 
+Some column names match C/C++ keywords, so tools/codegen/gentabledefs.py will append an underscore to those struct members.  For example, usb_devices table has a column named "class".  The struct field would be named "class_".  e.g.  `row.class_ = "HID";`
+
 ### Future Optimization Advantages
 1. Table .spec files no longer need to include **implementation** declarations.  Linkage symbol is tbl_TABLENAME_plugin_new().
 2. Now that the generated header files are available to implementation code, it would be possible to optimize generate/generator return value (call it QueryResultsV2) to not include column names for each row.  QueryResultsV2 could be `std::vector<std::map<uint32_t,std::string>>`, where the uint32_t is the index of the TableDefinition.columns[].  Alternatively, QueryResultsV2 could be `std::vector<std::vector<std::string>>` if no column values are skipped. If code uses the generated table struct (e.g. tbl_etc_hosts_data_t), the toHashmap() conversion function would take of the details.
