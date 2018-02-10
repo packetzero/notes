@@ -1,5 +1,7 @@
 ## Proposal: Alternative TablePlugin linkage
 
+This is for [pull request 4115](https://github.com/facebook/osquery/pull/4115), which corresponds to my  [alt_table_linkage_m](https://github.com/packetzero/osquery/commits/alt_table_linkage_m) branch.
+
 ### Goals
 
 The goals of this refactoring are:
@@ -72,5 +74,5 @@ Some column names match C/C++ keywords, so tools/codegen/gentabledefs.py will ap
  - [Additional Amalgamation](./compare_amalgamation.md)
 
 ### Future Optimization Advantages
-1. Table .spec files no longer need to include **implementation** declarations.  Linkage symbol is tbl_TABLENAME_plugin_new().
-2. Now that the generated header files are available to implementation code, it would be possible to optimize generate/generator return value (call it QueryResultsV2) to not include column names for each row.  QueryResultsV2 could be `std::vector<std::map<uint32_t,std::string>>`, where the uint32_t is the index of the TableDefinition.columns[].  Alternatively, QueryResultsV2 could be `std::vector<std::vector<std::string>>` if no column values are skipped. If code uses the generated table struct (e.g. tbl_etc_hosts_data_t), the toHashmap() conversion function would take of the details.
+1. A way to use table structs, return one row at a time, and avoid column names, data type marshalling to and from strings.  See [osquery_typed_rows proposal](../osquery_typed_rows/README.md) for details.
+2. Table .spec files no longer need to include **implementation** declarations.  Linkage symbol is tbl_TABLENAME_plugin_new().
