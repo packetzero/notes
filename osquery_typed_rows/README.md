@@ -45,11 +45,13 @@ We know that SQLite will do the following for virtual tables (in pseudo code):
 
 ### A new RowStruct interface
 Consider the following interface.  We can use code-generation to generate structs that contain C++ typed fields for each column, with **getColumn()** and **toHashmap()**.  The toHashmap() is to convert to the standard QueryData returned from generate().  The getColumn() is an abstraction of SQLite virtual table's xColumn() function.
+
 ![RowStruct interface](./images/ssRowStruct.png)
 
 ### New Table Plugin methods
 This approach requires two new methods on TablePluginBase: prepare() and next().  The generate() method remains unchanged.  The prepare() method is analogous to the xFilter function of a virtual table.  Perhaps *prepare* is not the right name, as it may be confused with prepared statements, but I was not sure filter was the right name either.  I'm find with either name, or an alternative.
 Actually, there's a third method as well called **getCollectionMethod()** which returns one of (CM_GENERATE, CM_GENERATOR, CM_NEXT), so we can distinguish between the 3 different ways to implement a table plugin.
+
 ![TablePluginBase methods](./images/ssTablePluginBase.png)
 
 
