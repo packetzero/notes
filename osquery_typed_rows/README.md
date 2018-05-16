@@ -62,3 +62,8 @@ Here is an example of the definitions generated for the "groups" table.  The tab
 
 ### Automatic generate() fallback
 The first table I implemented was processes on darwin.  When unit tests failed, I was reminded that processes table is special, in that it's used outside of the normal SQL code paths.  Monitoring code uses it to fetch process details, and assumes that **generate()** exists.  By implemeting the following fallback in TablePluginBase, any table that uses the CM_NEXT approach can also be used with generate().  Additionally, since the table cache handling is now done in sql/virtual_table.cpp, the core osquery code can use generate() on a CM_NEXT table if CACHEABLE and cacheAllowed().
+
+### Example table plugins using typed rows
+- [process_open_sockets, process_open_files on Darwin](https://github.com/packetzero/osquery/blob/typed_rows/osquery/tables/system/darwin/process_open_descriptors.cpp)
+- [launchd](https://github.com/packetzero/osquery/blob/typed_rows/osquery/tables/system/darwin/launchd.cpp)
+- [homebrew_packages](https://github.com/packetzero/osquery/blob/typed_rows/osquery/tables/system/darwin/homebrew_packages.cpp)
