@@ -38,4 +38,4 @@ The big difference, is that the *generate* method for table plugin will need to 
 
 ## Possible Migration to Typed Rows
 
-Part of my motivation for this, was my implementation of [alt_table_linkage_m](../osquery_alt_table_linkage/) and [typed_rows](../osquery_typed_rows/).  However, until seeing the columnsUsed code, I hadn't considered such requirements.  This forced me to take another look at the generated structs for each table schema, and make it work with those requirements.  Using this RowChecker, RowSetter interfaces will make it possible to share the code between the generated structs and Row.
+Part of my motivation for this, was my implementation of [alt_table_linkage_m](../osquery_alt_table_linkage/) and [typed_rows](../osquery_typed_rows/).  However, until seeing the columnsUsed code, I hadn't considered such requirements.  This forced me to take another look at the generated structs for each table schema, and make it work with those requirements.  Using this RowChecker, RowSetter interfaces will make it possible to share the code between the generated structs and RowSetter.
